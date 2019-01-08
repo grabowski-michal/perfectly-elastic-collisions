@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Zderzenia doskonale sprężyste</title>
+    <link rel="stylesheet" type="text/css" href="styles/MeyerReset.css"> 
+    <link rel="stylesheet" type="text/css" href="styles/MainStyle.css">
+    <script type="text/javascript">
+        var canvas, time, simulation;
+        var maxBalls;
+        var error = false;
+        var block = false;
+
+        window.onload = function () {
+            canvas = document.getElementById("experimentalCanvas");
+            space = new Space(canvas);
+            time = new Time(60, space);
+            simulation = new _01_Simulation(800, 400);
+            simulation.parametersControl();
+
+            window.onkeydown = function (event) {
+                if (event.key == "Escape") {
+                    time.Stop();
+                }
+            }
+        }
+    </script>
+    <script src="scripts/Parameters.js"></script>
+    <script src="scripts/Space.js"></script>
+    <script src="scripts/Time.js"></script>
+    <script src="scripts/Vector2D.js"></script>
+    <script src="scripts/elements/BasicElement.js"></script>
+    <script src="scripts/elements/Ball.js"></script>
+    <script src="scripts/elements/Rectangle.js"></script>
+    <script src="scripts/simulations/_01_Simulation.js"></script>
+</head>
+<body>
+    <div>
+        <canvas id="experimentalCanvas" width="800" height="400"></canvas>
+        <div id="options">
+            <div><span>Długość przegrody: </span><input id="baffle" type="range" value="33" step="1" min="10" max="100"> Szybkość otwierania: <span id="baffleVelSpan">8 px/s</span> <input id="baffleVelocity" type="range" value="8" step="1" min="1" max="100"><br/></div>
+            <div><span>Masa kul:&nbsp;</span><input id="mass" type="number" value="1" min="0.01" max="10" step="0.01">
+            <span>&nbsp;Optymalnie maksymalna ilość kul:&nbsp;</span><span id="maxBalls"></span>.</div><br/>
+            <div><span>Ilość kul: </span><input id="amount" type="number" value ="30" min="1" max="300" step="1"></div><br/>
+            <div><span>Przedział długości wektora prędkości:&nbsp;</span>&lt; <input id="lesserVelocity" type="number" value="2" min="0" max="50" step="0.1"> , <input id="greaterVelocity" type="number" value="4" min="0" max="50" step="0.1"> &gt;.</div><br/>
+            <div><span>Kolor kul:&nbsp;</span><input id="ballsColor" type="color">&nbsp;&nbsp;&nbsp;<span>Gradient:</span> <input id="gradient" type="checkbox"> </div><br/>
+            <input id="beginSimulation" type="button" value="Rozpocznij symulację">
+        </div>
+    </div>
+</body>
+</html>

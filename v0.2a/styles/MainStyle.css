@@ -1,0 +1,132 @@
+body {
+    margin:0;
+    padding:0;
+}
+div {
+    width:100vw;
+    height:100vh;
+}
+#experimentalCanvas {
+    position:absolute;
+    width:800px;
+    height:400px;
+    left:50%;
+    transform:translate(-50%);
+}
+#options {
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translate(-50%);
+    border:2px solid black;
+    border-radius:10px;
+    background-color:rgba(0, 0, 0, 0.85);
+    width:760px;
+    height:180px;
+    margin-bottom:10px;
+    padding:10px 20px;
+    text-align:center;
+    color:white;
+    text-shadow:2px 2px 1px black;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-ms-track {
+  cursor: pointer;
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
+}
+#options div {
+  display:inline;
+  padding-bottom:15px;
+}
+#options span {
+  padding-bottom:10px;
+  display:inline-block;
+}
+#amount {
+  width:45px;
+}
+#mass, #lesserVelocity, #greaterVelocity {
+  width:40px;
+}
+#maxBalls {
+  color:lime;
+}
+#infoAboutAmount1, #infoAboutAmount2 {
+  width:250px;
+  height:100px;
+  border-radius:10px;
+  background-color:rgba(0, 0, 0, 0.85);
+  text-align:center;
+  color:white;
+  text-shadow:2px 2px 1px black;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position:absolute;
+  top:420px;
+  font-size:48px;
+}
+#timerDiv {
+  width:150px;
+  height:50px;
+  border-radius:10px;
+  background-color:rgba(0, 0, 0, 0.85);
+  color:white;
+  text-shadow:2px 2px 1px black;
+  text-align:center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position:absolute;
+  top:540px;
+  left:50%;
+  transform:translate(-50%);
+  font-size:20px;
+}
+#infoAboutAmount1 {
+  left:36.5vw;
+  transform:translate(-50%);
+}
+#infoAboutAmount2 {
+  left:64vw;
+  transform:translate(-50%);
+}
+.amountLabel {
+  position:absolute;
+  top:10px;
+  left:50%;
+  transform:translate(-50%);
+  font-size:12px;
+  width:100%;
+}
+#openBaffle {
+  background-color:rgba(7, 100, 12, 0.9);
+  color:white;
+  text-shadow:2px 2px 1px black;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position:absolute;
+  left:50vw;
+  transform:translate(-50%);
+  top:180px;
+  text-align:center;
+  width:20vw;
+  height:50px;
+  border-radius:10px;
+  cursor:pointer;
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Zderzenia doskonale sprężyste</title>
+    <link rel="stylesheet" type="text/css" href="styles/MeyerReset.css"> 
+    <link rel="stylesheet" type="text/css" href="styles/MainStyle.css">
+    <script type="text/javascript">
+        var canvas, time, simulation;
+        var maxBalls;
+        var error = false;
+        var block = false;
+
+        window.onload = function () {
+            canvas = document.getElementById("experimentalCanvas");
+            var space = new Space(canvas);
+            time = new Time(60, space);
+            simulation = new Perfectly_Elastic_Collisions_01();
+
+            window.onkeydown = function (event) {
+                if (event.key == "Escape") {
+                    time.Stop();
+                }
+            }
+
+            document.getElementById("baffle").oninput = function () {
+                simulation.changeBaffleHeight(document.getElementById("baffle").value);
+            }
+
+            document.getElementById("mass").oninput = function () {
+                maxBalls = simulation.checkMaxBallsAmount(parseFloat(document.getElementById("mass").value));
+                document.getElementById("amount").setAttribute("max", maxBalls);
+                document.getElementById("maxBalls").innerHTML = maxBalls;
+                if (parseInt(document.getElementById("amount").value) > maxBalls) document.getElementById("amount").value = maxBalls;
+            }
+
+            document.getElementById("amount").oninput = function () {
+                if (document.getElementById("amount").value > maxBalls || isNaN(parseFloat(document.getElementById("amount").value))) {
+                    document.getElementById("maxBalls").style.color = "red";
+                    error = true;
+                } else {
+                    document.getElementById("maxBalls").style.color = "lime";
+                    error = false;
+                }
+            }
+
+            document.getElementById("baffleVelocity").oninput = function () {
+                document.getElementById("baffleVelSpan").innerHTML = parseInt(document.getElementById("baffleVelocity").value) + "px/s";
+                simulation.baffleVelocity = parseInt(document.getElementById("baffleVelocity").value);
+            }
+
+            document.getElementById("beginSimulation").onclick = function () {
+                if (parseFloat(document.getElementById("lesserVelocity").value) <= parseFloat(document.getElementById("greaterVelocity").value) && !(isNaN(parseFloat(document.getElementById("lesserVelocity").value))) && !(isNaN(parseFloat(document.getElementById("greaterVelocity").value)))) {
+                    if (block == false && error == false) {
+                        space.frequencyFactor = parseFloat(document.getElementById("greaterVelocity").value) + 1;
+
+                        block = true;
+                        simulation.beginSimulation (parseFloat(document.getElementById("mass").value), parseFloat(document.getElementById("amount").value), parseFloat(document.getElementById("lesserVelocity").value), parseFloat(document.getElementById("greaterVelocity").value), (document.getElementById("ballsColor").value));
+                        document.getElementById("options").remove();
+
+                        var infoAboutAmount1 = document.createElement("div"), infoAboutAmount2 = document.createElement("div");
+                        var body = document.getElementsByTagName("body")[0];
+                        infoAboutAmount1.setAttribute("id", "infoAboutAmount1"); infoAboutAmount2.setAttribute("id", "infoAboutAmount2");
+                        body.appendChild(infoAboutAmount1); body.appendChild(infoAboutAmount2);
+
+                        var openBaffle = document.createElement("div");
+                        openBaffle.setAttribute("id", "openBaffle");
+                        openBaffle.innerHTML = "Otwórz przegrodę";
+                        body.appendChild(openBaffle);
+                        openBaffle.onclick = function () {
+                            openBaffle.remove();
+                            simulation.openBaffle();
+                        }
+                    }
+                } else {
+                    alert("Ustaw poprawny przedział długości wek. prędkości.");
+                }
+            }
+
+            document.getElementById("mass").oninput();
+            document.getElementById("amount").oninput();
+            document.getElementById("baffle").oninput();
+            document.getElementById("baffleVelocity").oninput();
+        }
+    </script>
+    <script src="scripts/Space.js"></script>
+    <script type="text/javascript" src="scripts/Time.js"></script>
+    <script src="scripts/Vector2D.js"></script>
+    <script src="scripts/elements/BasicElement.js"></script>
+    <script src="scripts/elements/Ball.js"></script>
+    <script src="scripts/elements/Rectangle.js"></script>
+    <script src="scripts/simulations/01_Perfectly_Elastic_Collisions.js"></script>
+</head>
+<body>
+    <div>
+        <canvas id="experimentalCanvas" width="800" height="400"></canvas>
+        <div id="options">
+            <div><span>Długość przegrody: </span><input id="baffle" type="range" value="33" step="1" min="10" max="100"> Szybkość otwierania: <span id="baffleVelSpan">8 px/s</span> <input id="baffleVelocity" type="range" value="8" step="1" min="1" max="100"><br/></div>
+            <div><span>Masa kul:&nbsp;</span><input id="mass" type="number" value="1" min="0.01" max="10" step="0.01">
+            <span>&nbsp;Optymalnie maksymalna ilość kul:&nbsp;</span><span id="maxBalls"></span>.</div><br/>
+            <div><span>Ilość kul: </span><input id="amount" type="number" value ="30" min="1" max="300" step="1"></div><br/>
+            <div><span>Przedział długości wektora prędkości:&nbsp;</span>&lt; <input id="lesserVelocity" type="number" value="2" min="0" max="50" step="0.1"> , <input id="greaterVelocity" type="number" value="4" min="0" max="50" step="0.1"> &gt;.</div><br/>
+            <div><span>Kolor kul:&nbsp;</span><input id="ballsColor" type="color"></div><br/>
+            <input id="beginSimulation" type="button" value="Rozpocznij symulację">
+        </div>
+    </div>
+</body>
+</html>
